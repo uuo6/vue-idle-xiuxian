@@ -16,20 +16,9 @@
           <n-upload :show-file-list="false" @change="handleImportSave">
             <n-button>导入存档</n-button>
           </n-upload>
-          <n-button target="_blank" href="https://github.com/setube/vue-idle-xiuxian" tag="a" type="primary">
-            开源地址
-          </n-button>
-          <n-button type="error" @click="qq = true">官方群聊</n-button>
         </n-space>
       </n-space>
     </n-card>
-    <n-modal preset="dialog" title="玩家交流群" v-model:show="qq">
-      <n-card :bordered="false" size="huge" role="dialog" aria-modal="true">
-        <n-space vertical>
-          <n-input value="920930589" readonly type="text" />
-        </n-space>
-      </n-card>
-    </n-modal>
   </div>
 </template>
 
@@ -118,7 +107,6 @@
     })
   }
 
-  const qq = ref(false)
 
   // 修改道号
   const handleChangeName = () => {
