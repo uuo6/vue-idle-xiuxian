@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>游戏大厅</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+    margin: 0; padding: 40px 20px 60px;
+    background-color: #f0f0f0;
+    color: #333;
+  }
+  h1 { text-align: center; color: #333; font-size: 32px; margin: 10px 0 6px; }
+  .subtitle { text-align: center; color: #888; font-size: 14px; margin: 0 0 10px; }
+  .games-container {
+    display: flex; flex-wrap: wrap; justify-content: center;
+    gap: 30px; margin-top: 30px;
+    max-width: 1200px; margin-left: auto; margin-right: auto;
+  }
+  .card {
+    width: 300px; padding: 30px;
+    background-color: #fff; border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,.1);
+    text-align: center; cursor: pointer;
+    transition: transform .3s ease, box-shadow .3s ease;
+    display: flex; flex-direction: column;
+  }
+  .card:hover { transform: translateY(-5px); box-shadow: 0 6px 12px rgba(0,0,0,.15); }
+  .card .emoji { font-size: 34px; line-height: 1; }
+  .card h2 { color: #333; margin: 16px 0 12px; font-size: 21px; }
+  .card p { color: #666; margin: 0 0 26px; font-size: 14px; line-height: 1.7; flex: 1; }
+  .play-button {
+    background-color: #4CAF50; color: #fff; border: none;
+    padding: 12px 24px; font-size: 16px; border-radius: 5px;
+    cursor: pointer; transition: background-color .3s;
+    font-family: inherit;
+  }
+  .play-button:hover { background-color: #45a049; }
+  .card.coming { opacity: .55; cursor: default; }
+  .card.coming:hover { transform: none; box-shadow: 0 4px 8px rgba(0,0,0,.1); }
+  .card.coming .play-button { background-color: #bbb; cursor: default; }
+  footer { text-align: center; color: #999; font-size: 12.5px; margin-top: 46px; line-height: 2; }
+  footer a { color: #7f8fa6; }
+</style>
+</head>
+<body>
+  <h1>游戏大厅</h1>
+  <p class="subtitle">挑一个开始玩吧</p>
+  <div class="games-container" id="games"></div>
+  <footer>
+    开源项目（MIT）：<a href="https://github.com/setube/vue-idle-xiuxian" target="_blank" rel="noreferrer">vue-idle-xiuxian</a> ·
+    <a href="https://github.com/VickScarlet/remake" target="_blank" rel="noreferrer">remake</a><br />
+    本站仅做聚合部署，游戏内容版权归原作者所有
+  </footer>
+
+<script>
+  // ====== 以后加游戏：在这个数组里加一行就行 ======
+  // href 用相对路径；coming: true 表示占位（未上线）
+  const GAMES = [
+    {
+      emoji: "🧘",
+      title: "我的放置仙途",
+      desc: "放置修仙：挂机吐纳、炼丹抽奖、秘境探索",
+      href: "./xiuxian/",
+    },
+    {
+      emoji: "🎲",
+      title: "人生重开模拟器",
+      desc: "抽天赋、分属性，看看这一世能活成什么样",
+      href: "./remake/",
+    },
+    // {
+    //   emoji: "🎮",
+    //   title: "示例游戏",
+    //   desc: "在这里写一句简介",
+    //   href: "./example/",
+    // },
+  ];
+
+  const container = document.getElementById("games");
+
+  GAMES.forEach(function (game) {
+    const card = document.createElement("div");
+    card.className = "card" + (game.coming ? " coming" : "");
+
+    const emoji = document.createElement("div");
+    emoji.className = "emoji";
+    emoji.textContent = game.emoji || "🎮";
+
+    const title = document.createElement("h2");
+    title.textContent = game.title;
+
+    const desc = document.createElement("p");
+    desc.textContent = game.desc || "";
+
+    const btn = document.createElement("button");
+    btn.className = "play-button";
+    btn.type = "button";
+    btn.textContent = game.coming ? "敬请期待" : "开始游戏";
+
+    card.appendChild(emoji);
+    card.appendChild(title);
+    card.appendChild(desc);
+    card.appendChild(btn);
+
+    if (!game.coming && game.href) {
+      card.addEventListener("click", function () { location.href = game.href; });
+    }
+    container.appendChild(card);
+  });
+</script>
+</body>
+</html>
